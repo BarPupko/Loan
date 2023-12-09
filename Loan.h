@@ -32,9 +32,17 @@ public:
 
     int getTerm() const;
 
-    void Display() const;
+    int setTerm(int);
 
-    friend std::ostream &operator<<(std::ostream &os, const Loan &loan);
+    void Display() const;
+    //will check equality between 3 parameters
+    bool operator==(const Loan &rhs) const;
+
+    Loan operator+(int additionalTerm) const;
+
+    int monthly_payment(int amount) const;
+
+    int term ;
 
 protected:
     std::string name;
@@ -42,7 +50,6 @@ protected:
     int id;
     double amount;
     double rate;
-    int term ;
     static int nextID; // Static variable to keep track of the next ID
 };
 

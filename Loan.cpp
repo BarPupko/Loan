@@ -2,6 +2,7 @@
 // Created by CBSC on 09-Dec-23.
 //
 #include <iostream>
+#include <cmath>
 #include "Loan.h"
 int Loan::nextID = 100; // Initialize static variable
 
@@ -54,6 +55,12 @@ void Loan::setName(const std::string &NewName) {
     Loan::name = NewName;
 }
 
+
+int Loan::setTerm(int newTerm) {
+    return this->term=newTerm;
+}
+
+
 void Loan::setId(int id) {
     Loan::id = id;
 }
@@ -73,3 +80,29 @@ void Loan::Display() const {
 }
 
 
+
+bool Loan::operator==(const Loan &rhs) const {
+    return amount == rhs.amount &&
+           rate == rhs.rate &&
+           term == rhs.term;
+}
+
+
+int Loan::monthly_payment(int amount) const {
+    float p;
+    p = amount * rate;
+
+    // Calculate the denominator of the monthly payment formula
+    p *= static_cast<float>(pow(1 + rate, term));
+    p /= static_cast<float>(pow(1 + rate, term) - 1);
+
+    // Return the calculated monthly payment
+    return p;
+}
+// Overload the + operator to add an integer to the loan's term
+
+Loan Loan::operator+(int additionalTerm) const {
+    Loan newLoan = *this; // Create a new Loan object as a copy of the current one
+    newLoan.term += additionalTerm; // Modify the term of the new Loan object
+    return newLoan; // Return the modified Loan object
+}
